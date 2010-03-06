@@ -1,0 +1,10 @@
+TfsConverter.suo
+TfsConverter/bin
+TfsConverter/obj
+TfsConverter/TfsConverter.csproj.user
+TfsConverter/Microsoft.TeamFoundation.Client.dll
+TfsConverter/Microsoft.TeamFoundation.Common.dll
+TfsConverter/Microsoft.TeamFoundation.dll
+TfsConverter/Microsoft.TeamFoundation.VersionControl.Client.dll
+TfsConverter/Microsoft.TeamFoundation.VersionControl.Common.dll
+
