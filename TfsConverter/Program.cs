@@ -132,10 +132,22 @@ namespace TfsConverter
 
         private static long ChangesetCommitTime(Changeset item)
         {
-            // Our Starteam import put checkin date/time in Starteam as a commit comment.
-            // Extract it and use it when we can; else use the commit date/time in TFS.
-            Match match = new Regex(@"(\d+/\d+/\d+ \d+:\d+:\d+ ..):.*$").Match(item.Comment);
-            return DateTimeToUnix((match.Success) ? DateTime.Parse(match.Groups[1].Value) : item.CreationDate);
+			// Some changesets in our projects do not have comments and 
+			// this causes an InvalidOperationException. So we check if 
+			// item.Comment is valid before performing pattern matching 
+			// with a regular expression.
+			if (item.Comment != null)
+			{
+				// Our Starteam import put checkin date/time in Starteam as a commit comment.
+	            // Extract it and use it when we can; else use the commit date/time in TFS.
+	            Match match = new Regex(@"(\d+/\d+/\d+ \d+:\d+:\d+ ..):.*$").Match(item.Comment);
+				if (match.Success)
+				{
+					return DateTimeToUnix(match.Groups[1].Value);
+				}
+			}
+			
+			return DateTimeToUnix(item.CreationDate);
         }
 
         private static int CompareChangesets(Changeset c1, Changeset c2)
